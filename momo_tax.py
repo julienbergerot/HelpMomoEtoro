@@ -41,6 +41,8 @@ def process_document(path="example.pdf"):
 if __name__ == "__main__":
     lines = process_document(path=DOCUMENT_NAME)
 
+    stored = []
+
     for idx, splits in enumerate(lines[START_LINE:]):
         print(f"Line number {idx + START_LINE}")
 
@@ -49,21 +51,20 @@ if __name__ == "__main__":
             splits.insert(7, "")
 
         dic = {
-            "211": splits[0],
+            "211": splits[0].replace(".", "/"),
             "212": splits[1],
             "213": splits[2],
-            "214": "",
-            "215": splits[3],
-            "216": "",
-            "217": splits[4],
-            "218": splits[5],
             "220": splits[6],
             "221": splits[7],
-            "222": "",
-            "223": splits[8],
-            "final": splits[9],
         }
-        for key, value in dic.items():
-            pyperclip.copy(value)
-            wait_for_key()
-            time.sleep(0.2)
+
+        stored.append(dic)
+
+        if len(stored) == 5:
+            for key in dic.keys():
+                for i in range(5):
+                    value = stored[i][key]
+                    pyperclip.copy(value)
+                    wait_for_key()
+                    time.sleep(0.2)
+            stored = []
