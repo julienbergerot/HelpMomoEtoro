@@ -20,7 +20,7 @@ def wait_for_key():
 
 def process_document(path="example.pdf"):
     # creating a pdf reader object
-    reader = PdfReader("example.pdf")
+    reader = PdfReader(path)
 
     # creating a page object
     pages = reader.pages
