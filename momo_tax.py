@@ -9,13 +9,12 @@ START_LINE = 0
 
 
 def wait_for_key():
-    while True:  # making a loop
-        try:  # used try so that if user pressed other than the given key error will not be shown
-            if keyboard.is_pressed("v"):  # if key 'q' is pressed
-                # print("You Pressed V Key!")
-                break  # finishing the loop
-        except:
-            break
+    while True:
+        # Wait for the next event.
+        event = keyboard.read_event()
+        if event.event_type == keyboard.KEY_DOWN:
+            if event.name == "ctrl":
+                return
 
 
 def process_document(path="example.pdf"):
@@ -52,10 +51,10 @@ if __name__ == "__main__":
 
         dic = {
             "211": splits[0].replace(".", "/"),
-            "212": splits[1],
-            "213": splits[2],
-            "220": splits[6],
-            "221": splits[7],
+            "212": int(float(splits[1].replace(",", "."))),
+            "213": int(float(splits[2].replace(",", "."))),
+            "220": int(float(splits[6].replace(",", "."))),
+            "221": "" if splits[7] == "" else int(float(splits[7].replace(",", "."))),
         }
 
         stored.append(dic)
